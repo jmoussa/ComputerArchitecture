@@ -1,9 +1,9 @@
 Lecture 12 2/24
 *First Lecture on Assembly*
 
-
-Understanding Assembly
--------------------------------------------------
+===========================================
+Understanding Assembly                   ||
+===========================================
 
 Instruction
 Registers Available
@@ -20,8 +20,8 @@ Opcode | Addressing Mode | Other Bytes
   How to interpret operands
 Some instructions can be single-byte b/c operands and addressing mode are implicitly
 
-
-ASSEMBLY INSTRUCTIONS
+------------------------------------------------------------------------------------------------------
+ASSEMBLY INSTRUCTIONS                                                                                |
 ------------------------------------------------------------------------------------------------------
 Byte: 8 bits
   char
@@ -31,6 +31,7 @@ Double Word: 32 bits
   int, float
 Quad Word: 64 bits
   double
+
 --------------------------------------------
 MOV - move instruction (USED TO COPY DATA) |
 --------------------------------------------
@@ -50,6 +51,8 @@ Used to COPY data: (assigning variables in c)
   Memory to register (Absolute Addressing)
   Register to memory 
   Register to register
+
+
 ------------------------------
 Examples:                    |
 ------------------------------
@@ -113,31 +116,6 @@ Scaled Index Addressing Mode  |
       base index scale
 movl (%ecx, %ebx, 4) %eax
   multiplies by size of data type (4)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
