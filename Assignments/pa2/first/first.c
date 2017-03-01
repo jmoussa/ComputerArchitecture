@@ -25,7 +25,7 @@ int main(int argc, char ** argv){
     
     //read dictionary
     head = NULL;
-    dictionaryFile = fopen(dictrn, "r");
+    dictionaryFile = fopen(dictfn, "r");
     if(!dictionaryFile){
       printf("ERROR, Invalid Input\n");
       return 0;
@@ -37,7 +37,7 @@ int main(int argc, char ** argv){
     dataFile = fopen(datafn,"r");
     if(!dataFile){
       printf("ERROR, Invald Input\n");
-      return0;
+      return 0;
     }
     readFile(dataFile);
     fclose(dataFile);
@@ -192,7 +192,6 @@ void dealloc(node* ptr){
   }
   if(ptr->word){
     free(ptr->word);
-
   }
   free(ptr);
 }
