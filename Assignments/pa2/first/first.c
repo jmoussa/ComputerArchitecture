@@ -10,27 +10,37 @@ int mlc = 1;
 
 int main(int argc, char ** argv){
   FILE *file;
-  char buffer[600];
+  char buffer[512];
 
   if(argc < 2 || !(file = fopen(argv[1],"r"))){
     printf("ERROR, Invalid Input \n");
     return 0;
   }
   while(fgets(buffer,sizeof(buffer),file)){
-    FILE *dictionary;
-    FILE *data;
+    FILE *dictionaryFile;
+    FILE *dataFile;
 
-    char* dicfunction=strtok(buffer," ");
-    char* datafunction=strtok(NULL, " \n");
-
+    char* dictfn= strtok (buffer," ");
+    char* datafn= strtok (NULL, " \n");
+    
+    //read dictionary
     head = NULL;
-    dictionary = fopen(dicfunction, "r");
-    if(!data){
-      printf("ERROR, No Data File\n");
+    dictionaryFile = fopen(dictrn, "r");
+    if(!dictionaryFile){
+      printf("ERROR, Invalid Input\n");
       return 0;
     }
-    readFile(data);
-    fclose(data);
+    readDict(dictionaryFile);
+    fclose(dictionaryFile);
+    
+    //read data file
+    dataFile = fopen(datafn,"r");
+    if(!dataFile){
+      printf("ERROR, Invald Input\n");
+      return0;
+    }
+    readFile(dataFile);
+    fclose(dataFile);
 
     printResult();
     dealloc(head);
@@ -46,7 +56,7 @@ int main(int argc, char ** argv){
 void readDict(FILE *dict_file){
   char w;
   size_t cin = 0;
-  char buffer[600];
+  char buffer[512];
   for(;;){
     if((w=fgetc(dict_file))==EOF || !isalpha(w)){
       if(cin > 0){
@@ -66,7 +76,7 @@ void readDict(FILE *dict_file){
 void readFile(FILE *file){
 	char w;
 	size_t cin = 0;
-	char buffer[600];
+	char buffer[512];
 
 	for (;;) {
 		if ((w = fgetc(file)) == EOF || !isalpha(w) ) {
