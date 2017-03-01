@@ -1,0 +1,17 @@
+Lecture 13
+Assembly Code Pt 2
+
+
+------------------------------------------------
+Address Computation  %edx=0xf000 %ecx=0x100    |
+------------------------------------------------
+Expression   | Computation   | Address(effective
+-------------|---------------|------------------
+0x8(%edx)    |0xf000 + 0x8   | 0xf008
+(%edx,%ecx)  |0xf000 + 0x100 | 0xf100
+(%edx,%ecx,4)|0xf000+4*0x100 | 0xf400
+0x80(,%edx,2)|2*0xf000 + 0x80| 0x1e080
+
+Stack Invariants - region b/n %esp and %ebp is the Current Activation Record
+
+
