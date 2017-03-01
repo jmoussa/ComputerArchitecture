@@ -1,6 +1,8 @@
-FILES = first.c
-FLAGS =
+all: first 
+	
+first: first.c
+	gcc -Wall -Werror -fsanitize=address first.c -o first
 
-all: 
-	gcc  
+clean:
+	rm -rf first
 	
