@@ -17,7 +17,9 @@ Expression   | Computation   | Address(effective
 calll Instruction                              |
 ------------------------------------------------
 Calls function
-  -no arguments
+  -pushing return address to the top of the stack
+  -hardware moves Program Counter to the function
+  -arguments are right underneath the function on the stack (left->right - going down the stack)
 
 calll   _swap
 
@@ -36,7 +38,6 @@ Load Effective Address Function
 xorl Instruction|
 -----------------
 Initialize 0
-
 xorl    %eax,%eax
 
 
@@ -47,12 +48,14 @@ In 32 bit, return value will ALWAYS be in register %eax
 
 
 ---------------------------------------------------------------------------------------------------------------
-Establishing the Stack Invariant - area b/n %esp and %ebp is the Activation Record                            |
+Establishing the Stack Invariants - area b/n %esp and %ebp is the Activation Record                           |
 ---------------------------------------------------------------------------------------------------------------
 
 
-memory 
-    0 ___________________________________
+memory
+addreses
+low
+    0|___________________________________
      | Code
      | globals
      | heap ↓
@@ -61,30 +64,12 @@ memory
      | Stack Invariant (Local variables)
      | %ebp
      | stack ↑
-high |-----------------------------------
+     |___________________________________
+high 
 
 
 -Stack grows towards lower addresses (for Linux x86 machines)
 -Each instruction pushed on the stack gets a lower memory address
 -Local Variables get added to stack invariant
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
