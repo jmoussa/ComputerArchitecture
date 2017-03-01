@@ -15,7 +15,7 @@ node* makeNode();
 void addDicWord(char* word);
 void matchString(char* string);
 void result();
-void traverseWrite(FILE *output, node* ptr);
+void traverse(FILE *output, node* ptr);
 void dealloc(node* ptr);
 
 
