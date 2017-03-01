@@ -12,6 +12,79 @@ Expression   | Computation   | Address(effective
 (%edx,%ecx,4)|0xf000+4*0x100 | 0xf400
 0x80(,%edx,2)|2*0xf000 + 0x80| 0x1e080
 
-Stack Invariants - region b/n %esp and %ebp is the Current Activation Record
+
+------------------------------------------------
+calll Instruction                              |
+------------------------------------------------
+Calls function
+  -no arguments
+
+calll   _swap
+
+
+------------------
+leal Instruction |
+------------------
+Load Effective Address Function
+  -Computes Effective Address
+  -puts EFFECTIVE ADDRESS into destination register
+  -DOES NOT TOUCH MEMORY
+  -Essentially moves the address to destination register
+
+
+-----------------
+xorl Instruction|
+-----------------
+Initialize 0
+
+xorl    %eax,%eax
+
+
+-----------------
+Return Values   |
+-----------------
+In 32 bit, return value will ALWAYS be in register %eax
+
+
+---------------------------------------------------------------------------------------------------------------
+Establishing the Stack Invariant - area b/n %esp and %ebp is the Activation Record                            |
+---------------------------------------------------------------------------------------------------------------
+
+
+memory 
+    0 ___________________________________
+     | Code
+     | globals
+     | heap ↓
+     |
+     | %esp
+     | Stack Invariant (Local variables)
+     | %ebp
+     | stack ↑
+high |-----------------------------------
+
+
+-Stack grows towards lower addresses (for Linux x86 machines)
+-Each instruction pushed on the stack gets a lower memory address
+-Local Variables get added to stack invariant
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
