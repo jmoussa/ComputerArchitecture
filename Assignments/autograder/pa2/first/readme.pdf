@@ -1,0 +1,2 @@
+My dictionary structure was a trie data structure. My code reads in data from the input file and traverses the trie for any matches. If there isn't a match it hits a null pointer.
+The running time of the dictionary words adding to the trie structure is O(n*k). The search for data is the longest part running at O(m*k). The space requirement is O(n*k) since words are stored once and have a linked list of the number of characters.

@@ -1,0 +1,121 @@
+Lecture 12 2/24
+*First Lecture on Assembly*
+
+===========================================
+Understanding Assembly                   ||
+===========================================
+
+Instruction
+Registers Available
+Memory
+
+Machine Representation
+-Each assembly instruction translated to a sequence of 1-15 bytes
+
+Opcode | Addressing Mode | Other Bytes
+
+1. Binary representation of the opcode
+2. Instruction specifies the addressing mode
+  Type of operands (registers or register & memory)
+  How to interpret operands
+Some instructions can be single-byte b/c operands and addressing mode are implicitly
+
+------------------------------------------------------------------------------------------------------
+ASSEMBLY INSTRUCTIONS                                                                                |
+------------------------------------------------------------------------------------------------------
+Byte: 8 bits
+  char
+Word: 16 bits
+  short int
+Double Word: 32 bits
+  int, float
+Quad Word: 64 bits
+  double
+
+--------------------------------------------
+MOV - move instruction (USED TO COPY DATA) |
+--------------------------------------------
+  
+movl - move double word
+movw - move word
+movb - move byte
+
+mov SRC, DEST: move SRC to DEST
+  DEST - register or a location
+  SRC - contents, memory location, constant or label
+  if using gcc: movl <src>, <dest>
+  All instructions in x86 are 32-bit
+
+Used to COPY data: (assigning variables in c)
+  Constant to register (Immediate Addressing)
+  Memory to register (Absolute Addressing)
+  Register to memory 
+  Register to register
+
+
+------------------------------
+Examples:                    |
+------------------------------
+
+movl %eax, %ebx (register to register)
+movl $24, %ecx (constant to register)
+movl 24, %eax (memory to register) 
+movl (%eax),%ecx (grabs the value of a pointer) 
+  1. Identify the contents of %eax - Effective Address= "0xab"
+  2. Assign it to %ecx
+--------------------
+%ecx = p
+%eax = q
+movl (%eax), %ecx
+  p = *q
+--------------------
+*p = *q (memory to memory)
+CANNOT BE DONE
+ONLY 1 Operand can be from memory
+Use dummy register (free register)
+  movl (%eax), %esi temp = *q
+  movl %esi, (%ecx) *p = temp
+
+------------------------------ 
+Accessing Arrays Example:    |
+------------------------------
+arr - pointer to beginning of int arr[10]
+arr = %ecx
+p = %eax
+arr - memory address of 100
+
+arr[2] - memory address of 108 (int = 4 bytes)
+
+p = arr[2];
+  1. Find effective address of arr[2] - addl $8, %ecx (write 8 + %ecx to %ecx)
+  2. %ecx = 0x108
+  3. movl (%ecx), %eax
+
+OR PROVIDE AN OFFSET
+
+movl 8(%ecx), %eax
+  shifts effective address of (%ecx) forward(+) 8
+  *value at %ecx isn't changed*
+
+-------------------------------
+Index Addressing Mode         |
+-------------------------------
+p = arr[i]
+i = %ebx
+p = %eax
+int arr[10] = %ecx
+
+       arr +  i      p
+movl (%ecx, %ebx), %eax
+  1. Effective Address = %ecx + %ebx
+
+-------------------------------
+Scaled Index Addressing Mode  |
+-------------------------------
+      arr +  i * sizeof(int)
+      base index scale
+movl (%ecx, %ebx, 4) %eax
+  multiplies by size of data type (4)
+
+
+
