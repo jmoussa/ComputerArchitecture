@@ -13,9 +13,9 @@ Expression   | Computation   | Address(effective
 0x80(,%edx,2)|2*0xf000 + 0x80| 0x1e080
 
 
-------------------------------------------------
-calll Instruction                              |
-------------------------------------------------
+------------------
+calll Instruction|
+------------------
 Calls function
   -pushing return address to the top of the stack
   -hardware moves Program Counter to the function
@@ -42,10 +42,15 @@ xorl    %eax,%eax
 
 
 -----------------
+popl Instruction|
+-----------------
+Pops arguments out of the stack (prologue function, used when you finished)
+
+
+-----------------
 Return Values   |
 -----------------
 In 32 bit, return value will ALWAYS be in register %eax
-
 
 ---------------------------------------------------------------------------------------------------------------
 Establishing the Stack Invariants - area b/n %esp and %ebp is the Activation Record                           |
