@@ -24,10 +24,53 @@ Instructions                            |
 addl src,dest   dest=dest+src
 subl src,dest   dest=dest-src
 imull src,dest  dest=dest*src
-sall src,dest   dest=dest << src  (shift arithmetic left) multiply by 2^<base/shift amount>
-sarl src,dest   dest=dest >> src  (shift arithmetic right) divide by 2^<base>
-xorl src,dest   dest=dest^src
-andl src,dest   dest=dest & src
-orl src,dest    dest=dest | src
+sall src,dest   dest=dest << src | shift arithmetic left   | multiply by 2^<base/shift amount>  |  shift 1s to left, free spaces are filled by 0s
+sarl src,dest   dest=dest >> src | shift arithmetic right  | divide by 2^<base>                 |  shift 1s to right, free spaces are filled with 1s
+xorl src,dest   dest=dest^src    | 
+andl src,dest   dest=dest & src  | 
+orl src,dest    dest=dest | src  | 
+
+incl dest   dest=dest+1
+decl dest   dest=dest-1
+negl dest   dest= -dest   |   two's complement negation
+notl dest   dest= ~dest   |   
+
+
+
+-------------------------------------------
+leal for Arithmetic Expressions           |
+-------------------------------------------
+
+int arith(int x, int y, int x){
+  int t1 = x+y;
+  int t2 = z+t1;
+  int t3 = x+4;
+  int t4 = y*48;
+  int t5 = t3+t4;
+  int rval = t2*t5;
+  return rval;
+
+}
+
+
+//Setup
+arith:                      Setup
+  pull %ebp                 |
+  movl $esp, %ebp           |
+
+//Body                      Body
+  movl 8(%ebp), %eax        |
+  movl 12(%ebp), %edx       |
+  leal(%edx,%eax), %ecx     |
+  leal (%edx,%edx,2),%ecx   |
+  sall $4,%edx              |
+  addl 16(%ebp),%ecx        |
+  leal 4(%edx,%eax),%eax    |
+  imull %ecx,%eax           |
+
+//Finish                    Finish
+  movl %ebp,%esp            |
+  popl %ebp,%esp            |
+  ret                       |
 
 
