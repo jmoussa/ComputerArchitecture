@@ -18,8 +18,8 @@ calll Instruction|
 ------------------
 Calls function
   -pushing return address to the top of the stack
-  -hardware moves Program Counter to the function
-  -arguments are right underneath the function on the stack (left->right - going down the stack)
+  -HARDWARE moves Program Counter to the function
+  -arguments are right underneath the function on the stack (right to left - going down the stack)
 
 calll   _swap
 

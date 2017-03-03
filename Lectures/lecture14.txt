@@ -1,0 +1,33 @@
+Lecture 14 3/3/2016
+
+----------------------------------------
+Address Computation Instruction        |
+----------------------------------------
+leal: compute addres using addressing mode WITHOUT accessing memory
+
+leal <src>, <dest>
+  -src: address mode expression
+  -set dest to address specified by src
+
+Use:
+  Computing address without doing memory reference
+    p = &x[i];
+
+Example:
+  leal 7(%edx, %edx, 4), %eax
+  eax = 4*edx + edx + 7 = 
+
+-----------------------------------------
+Instructions                            |
+-----------------------------------------
+
+addl src,dest   dest=dest+src
+subl src,dest   dest=dest-src
+imull src,dest  dest=dest*src
+sall src,dest   dest=dest << src  (shift arithmetic left) multiply by 2^<base/shift amount>
+sarl src,dest   dest=dest >> src  (shift arithmetic right) divide by 2^<base>
+xorl src,dest   dest=dest^src
+andl src,dest   dest=dest & src
+orl src,dest    dest=dest | src
+
+
