@@ -26,9 +26,9 @@ subl src,dest   dest=dest-src
 imull src,dest  dest=dest*src
 sall src,dest   dest=dest << src | shift arithmetic left   | multiply by 2^<base/shift amount>  |  shift 1s to left, free spaces are filled by 0s
 sarl src,dest   dest=dest >> src | shift arithmetic right  | divide by 2^<base>                 |  shift 1s to right, free spaces are filled with 1s
-xorl src,dest   dest=dest^src    | 
-andl src,dest   dest=dest & src  | 
-orl src,dest    dest=dest | src  | 
+xorl src,dest   dest=dest^src     
+andl src,dest   dest=dest & src   
+orl src,dest    dest=dest | src   
 
 cmpl src1,src2 | subtract (src2 - src1) src2<=src1 | Conditional Equation
 test a,b | add a,b (cannot use jle)
@@ -38,8 +38,11 @@ jle dest | Jump to <dest> header
 incl dest   dest=dest+1
 decl dest   dest=dest-1
 negl dest   dest= -dest   |   two's complement negation
-notl dest   dest= ~dest   |   
+notl dest   dest= ~dest   |
 
+setX
+  Set single byte based on combinations of condition codes
+  One of 8 addressable byte registers
 
 
 -------------------------------------------

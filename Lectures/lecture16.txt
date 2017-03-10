@@ -1,0 +1,55 @@
+Lecture 16  3/10
+
+---------------------------------------------
+Switch Statements                           |
+---------------------------------------------
+
+Series of Conditionals
+  -Good for few cases
+  -Each case ends with a return/break
+  -default case at end
+
+------------------------------------
+Convert to Assesmbly               |
+------------------------------------
+
+For each case, generate a code block
+  -populate all blocks in a Jump Table
+    -jtab
+  -Approx. Translation to C
+    target=jtab[op];
+    goto *target;
+    
+Labels for each case: (compiler does it for you)
+
+Enum Values:
+---------------
+ADD    0
+MULT   1
+MINUS  2
+DIV    3
+MOD    4
+BAD    5
+
+
+Setup:
+---------------
+unparse_symbol_function:
+  pushl %ebp              #setup
+  movl %esp,%ebp          #setup
+  movl 8(%ebp), %eax      #eax = op
+  cmpl $5, %eax           #compare op : 5
+  ja .L49                 #if > goto DONE
+  jmp *.L57 (,eax,4)      #goto jumpTable[op]
+                            #start of jump table denoted by label .L57
+                            #register %eax holds op
+                            #must scale by factor of 4 to get offset into table (int enum)
+                            #fetch target from effective address .L57 + op*4
+Finish
+---------------
+.L49:
+  movl %ebp, %esp
+  popl %ebp
+  ret
+
+
