@@ -30,7 +30,7 @@ xorl src,dest   dest=dest^src
 andl src,dest   dest=dest & src   
 orl src,dest    dest=dest | src   
 
-cmpl src1,src2 | subtract (src2 - src1) src2<=src1 | Conditional Equation
+cmpl src1,src2 | subtract (src2 - src1) | src2<=src1 | Conditional Equation
 test a,b | add a,b (cannot use jle)
 
 jle dest | Jump to <dest> header 

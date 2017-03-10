@@ -1,8 +1,8 @@
 Lecture 16  3/10
 
----------------------------------------------
+=============================================
 Switch Statements                           |
----------------------------------------------
+=============================================
 
 Series of Conditionals
   -Good for few cases
@@ -53,3 +53,49 @@ Finish
   ret
 
 
+============================================
+Stack Frames                               |
+============================================
+-Positive Offsets are arguments
+-Negative Offsetes are local variables
+-call instruction moves old %ebp to top of stack so it can be registered when called method returns
+
+"Caller Save" Temporaries (parent function saves)
+  Caller saves temporary in its frame before calling
+  %eax, %edx, %ecx
+  
+"Callee Save" Temporaries (child function saves old value)
+  Callee saves temporary in its frame before using
+  %ebx, %esi, %edi
+
+Special
+  %esp (stack pointer) 
+  %ebp (frame pointer)
+
+
+=============================================
+Recursive Functions                         |
+=============================================
+
+rfact:
+  pushl  %ebp
+  movl  %esp, %ebp
+  pushl  %ebx
+  movl  8(%ebp), %ebx     #argument t1 == %ebx
+  cmpl  $1, %ebx          #if(1>=%ebx)
+  jle  .L78               #jump to .L78 (%eax = 1)
+  leal  -1(%ebx), %eax    #t1 - 1 (%ebx - 1) store in %eax
+  pushl  %eax             #argument to function rfact
+  call  rfact             #call rfact(%eax=t1-1)
+  imull  %ebx, %eax       #%eax = $ebx * %eax
+  jmp  .L79
+  .align  4
+
+.L78:
+  movl $1, %eax
+
+.L79
+  movl -4(%ebp), %ebx
+  movl %ebp, %esp
+  popl %ebp
+  ret                    #return whatever is in %eax
