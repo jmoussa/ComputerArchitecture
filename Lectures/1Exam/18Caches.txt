@@ -1,0 +1,44 @@
+Lecture 18 Cont. 3/29/2017
+
+--------------------------------------
+Caches                               |
+--------------------------------------
+*Best effort hash table*
+
+Memory System:
+    Different memories exist at different levels of the computer
+    Each var in their speed, size and cost
+
+RAM:
+    RAM is packaged as a chip
+    Basic unit is a cell (1 bit per cell)
+
+Static RAM: (caches)
+    Each cell stores bit with a 6-transistor circuit
+    Retain value indefinitely
+    Faster and more expensive than Dynamic RAM (DRAM)
+
+Dynamic RAM:
+    Each cell stores bit with a capacitor and transistor
+    Value must be refreshed 10-100ms
+    Sensitive to disturbances
+    Slower and cheaper than Static RAM (SRAM)
+
+Any program that is executing, needs to be run in Memory/RAM (NOT DISK)
+
+---------------------------------------
+Cache Memories
+--------------------------------------
+Small, fast SRAM-based memories managed automatically in hardware
+    -Hold frequently accessed blocks of main memory
+    -Sits much closer to processor than RAM/DRAM
+    -CPU searches through L1, L2 then RAM
+
+Locality
+Memory references are bunched together
+    -A small portion of address space is accessed at any given
+
+Temporal Locality- Most frequently accessed locations over time
+Spatial Locality- Accesses locations close to each other
+
+
