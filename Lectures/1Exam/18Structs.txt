@@ -1,0 +1,76 @@
+Lecture 18 3/29/17
+
+---------------------------------
+Structures in C and  Assembly   |
+---------------------------------
+
+Concept:
+    -contiguously-allocated region of memory
+    -refer to members within structure by names
+    -members may be of different type
+
+struct rec{             Memory Layout:
+    int i;              |  i  |     a     | p |
+    int a[3];           0     4   8  12  16   20
+    int *p;
+}
+
+void set_i(struct rec *r, int val){
+    r->i = val;
+}
+
+Assembly:
+    %eax =  val
+    %edx = r
+    movl    %eax,(%edx)
+
+
+----------------------------------------
+Generating Pointer to Struct. Member   |
+----------------------------------------
+
+int * find_a(struct rec *r, int index){
+    return &r->a[index];
+}
+
+address of index
+%eax = index
+leal 4(%edx,$eax,4)
+
+        __________%edx
+     i         
+    a[0]
+    a[1]
+    a[2]
+     p
+
+--------------------------------------     
+Structure Referencing                |
+--------------------------------------
+void set_p(struct rec *r){
+    r->p = &r->a[r->i];
+}
+
+Assembly:
+         __________%edx
+     i         
+    a[0]
+    a[1]
+    a[2]
+     p
+
+r->i            movl %edx,%ecx              A = %ecx = r->i
+&r->a[r->i]     leal 4(%edx,%ecx,4), %eax   &r->a[A]
+                movl %eax, 16(%edx)         r->p=&r->a[r->i]
+
+
+---------------------------------------
+Alignment
+---------------------------------------
+Since structs are contiguously allocated, the compiler adds padding to align different data types according to the rules
+
+
+Common Cases:
+    -char must start at multiple of 1
+    -int, float, char * : multiple of 4
+    -double             : multiple of 8 (windows) multiple of 4 (linux)
