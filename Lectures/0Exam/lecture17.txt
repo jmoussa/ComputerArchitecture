@@ -1,0 +1,64 @@
+Lecture 17 3/22/16
+
+=========================================================================================
+Array Allocation                                                                        |
+=========================================================================================
+
+
+Basic Principle
+-----------------------------------------
+>T A[L]
+    Array of data type T and length L
+    Contiguously allocated region of L * sizeof(T) bytes
+
+>int val[5]      |----|----|----|
+    4 bytes      x   x+4  x+8  x+12
+>double
+    8 bytes
+>char *p[3]
+    4 bytes
+>char p
+    1 byte
+
+
+Array Accessing
+-----------------------
+Register %edx contains starting address of array
+Register %eax contains array index
+Desired digit at 4*%eax + %edx
+Use memory reference (%edx,%eax,4)
+
+%eax = 0x100
+%edx = digit
+
+First Element
+    mov (%eax), %eax
+
+Second Element
+    mov     (%eax,%edx,4), %eax
+    Eff Add=%eax + %edx*4
+
+
+Array Loop Example
+---------------------
+Eliminate loop variable 'i'
+Convert array code to pointer code
+Express in do-while form
+
+int zd2int(intarray z){             %ecx = z | %eax = zip | %ebx = zend
+                                                                                int *t3 = ?
+int zip=0;                          xorl %eax,%eax                              int t1=0         (eax)
+int *zend=z+4;                      leal 16(%ecx),%ebx                          int t2=t3+4      (ebx)
+do{                           .L59:                                         .L59:
+                                    leal (%eax,%eax,4), %edx                    int t4 = t1+t1*4 (edx)
+    zip = 10 * zip + z;             movl (%ecx),%eax                            t1 = *(t3)
+    z++                             addl $4,%ecx                                t3 = t3+1        (ecx)
+}while(z <= zend);                  leal (%eax,%edx,2),%eax                     t1 = t1 + t4*2
+return zip;                         cmpl %ebx,%ecx                              if(t3 <= t2)
+                                    jle .L59                                        goto .L59
+}
+
+
+Multi-Level Array Example
+--------------------
+
