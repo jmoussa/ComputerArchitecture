@@ -1,0 +1,65 @@
+Lecture 19 3/31/2017
+
+================================================
+Caches                                         |
+================================================
+
+Larger cache  => Larger the latency/longer it takes to communicate with CPU
+Smaller cache => Faster speeds communicating with CPU
+
+
+Spatial Locality:
+-----------------------
+
+Cache Blocks: >grabbing multiple bytes of memory (contiguously) when accessing RAM
+              >instead of going byte by byte
+              >Typical cache block sizes are 32 or 64 bytes
+              >Stored in a block inside of cache
+
+
+Terminology:
+-----------------------
+    >Block Size - 32 (or 64) bytes
+        4 blocks = 128 byte cache
+    >Indexing Hash Fuction - address % [sizeof(hashTable)]
+
+    Key    |   Value
+    -----------------
+    0x400  | 42
+    0x420  | 7
+
+   -------------------
+
+    Cache:
+       0 | 0x400 -> 0x420
+       1 |
+       2 |
+       3 |
+
+    >Storing Keys
+        ****2^x = Block Size(32)***** ===> 2^5=32 (Last 5 bytes identify memory)
+            -Determines minimum bytes needed to identify memory
+            -In this case store last 5 bytes of the address as the key
+        >Given a single block, the last (5) bytes of memory addresses are the unique identifiers
+            -Last (5) are not needed in Hash Function
+            -Use the next few bits as key in Hash Function
+                *In this case key%4 so you only need 2 bits to represent 4 remainder values*
+        >Split address into three parts
+            -Tag: stored in the cache
+            -Index: select a particular block
+            -Block Selector: choose the bytes within the block
+
+Example:
+------------------------
+Block Size: 32
+Address: 0x400 | 0100 0 00  0 0000
+                |      |  ||      |
+                 Tag  Index Block Selector
+
+Address: 0x420  0100 0 01 0 0000
+Cache:
+       0 0100|42
+       1 0100|7
+       2     |
+       3     |
+

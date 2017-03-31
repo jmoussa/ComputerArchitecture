@@ -27,18 +27,20 @@ Dynamic RAM:
 Any program that is executing, needs to be run in Memory/RAM (NOT DISK)
 
 ---------------------------------------
-Cache Memories
---------------------------------------
+Cache Memories                        |
+---------------------------------------
 Small, fast SRAM-based memories managed automatically in hardware
     -Hold frequently accessed blocks of main memory
     -Sits much closer to processor than RAM/DRAM
     -CPU searches through L1, L2 then RAM
 
 Locality
+------------------
 Memory references are bunched together
     -A small portion of address space is accessed at any given
 
 Temporal Locality- Most frequently accessed locations over time
 Spatial Locality- Accesses locations close to each other
 
-
+Addresses the gap b/n CPU and RAM speed
+Small high speed memory can make computer faster and cheaper
