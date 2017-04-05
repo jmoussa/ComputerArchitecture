@@ -54,12 +54,18 @@ Example:
 Block Size: 32
 Address: 0x400 | 0100 0 00  0 0000
                 |      |  ||      |
-                 Tag  Index Block Selector
+                 Tag  Index Block Selector/Offset
 
-Address: 0x420  0100 0 01 0 0000
-Cache:
-       0 0100|42
-       1 0100|7
-       2     |
-       3     |
+>Block Offset: # of bytes to read a value from block (2^x=BlockSize)
+>Index: Identify Block Uniquely (CacheSize/BlockSize) 
+>Tag: Remaining bits
+
+Address: 0x420  01000 01 00000
+                Tag   In  BlockOffset
+
+Cache:Index | Tag  | Data
+       0    | 01000| 42
+       1    | 01000| 7
+       2    |      |
+       3    |      |
 

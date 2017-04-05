@@ -1,0 +1,88 @@
+Lecture 20 4/5/2016
+
+========================================
+Finding Data in a Cache                |
+========================================
+(Assume BlockSize = 32 bytes)
+Address: 0x420  01000   01      00000
+                Tag   Index  BlockOffset
+
+Elements of Address:
+-----------------------------------------------------------------
+Block Offset: Identify Block Element |  2^x=BlockSize           |
+Index: Identify CacheBlock           |  CacheSize/BlockSize     |
+Tag: Stored in Cache                 |  Remaining front bits    |
+-----------------------------------------------------------------
+
+-Part of memory address applied to cache
+    -Index
+-Remaining is stored as a key in cache
+    -First x bytes of address (Tag)
+-If tag maches, hit, use data
+-No match, miss, fetch data from memory
+    >Pull data from memory to Cache 
+        -Grab BlockSize bytes of data from Memory to Cache
+        -Put in index # of block
+
+
+==========================================
+Collisions                               |
+==========================================
+
+Conflict Miss- New Address points to an already occupied block in cache
+    >Kicks out old address
+
+Solution
+-------------------
+Reorganize Cache to Sets
+
+==========================================
+Sets                                     |
+==========================================
+Cache = Array of Sets = Array Of Blocks
+****Blocks are now separated by Tags****
+# of Sets = CacheSize/(BlockSize * Associativity)
+
+# of Blocks in Sets = Associativity
+
+Rather than kicking out old addresses with conflict misses, put them in separate blocks in the same set
+
+
+Example:
+-----------------------------
+CacheSize = 64 bytes            BlockOffset = 4 bits
+BlockSize = 16 bytes            Index = 1 bit
+Assiciativity = 2 bytes         Tag = Address - (Block+Index) = 12 - 5 = 7 bits
+Sets = 64/(32)
+     = 2
+
+Cache has 4 blocks (2 in each set)
+    Use Index to index into sets
+    Tags index into Blocks
+
+
+0x400   0100 0000 0000
+0x500   0101 0000 0000
+
+Index |       Tag
+Set 0:  Block 0: 0100000(0x20)
+        Block 1: 0101000(0x28)
+
+Set 1:  Block 2:
+        Block 3:
+
+
+Replacement Policy: Used in case of collisions
+------------------------------
+    First in First Out
+    Automative Policy
+
+
+
+
+
+
+
+
+
+
