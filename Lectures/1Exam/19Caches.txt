@@ -68,4 +68,3 @@ Cache:Index | Tag  | Data
        1    | 01000| 7
        2    |      |
        3    |      |
-

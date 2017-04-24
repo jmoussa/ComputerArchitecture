@@ -1,0 +1,71 @@
+Lecture 21 4/7/16
+
+Direct-Mapped Cache: Associativity=1
+Fully Associative Cache: Sets=1
+
+Associativity is set/fixed by processor
+
+Associativity inc. ==> Bits for tag inc.
+
+==============================================
+Replacement                                  |
+==============================================
+
+Direct-Mapped Cache: Discard current, bring needed in
+Set Associate Cache: Need replacement algorithm
+    >FIFO: First-In-First-Out
+    >LRU: Least Recently Used
+    >Random: Select it randomly
+
+
+===============================================
+Writes and Cache                              |
+===============================================
+Writing data that is already cached (hit)?
+Writing data that is not in the cache (miss)?
+
+Dealing with a Write-hit (write operation is present in the cache)
+    write-through: immediately write data back to memory
+    write-back: defer the write to memory for as long as possible (when dealing with long multi-step process)
+        Need additional bit in cache to signal you will update later
+        Cached copy to lower level
+
+Dealing with a write-miss (write operation missing in the cache)
+    write-allocate: load the block into memory and update (write to cache and memory)
+    no-write-allocate: writes directly to memory (write to memory ONLY/DIRECTLY)
+
+
+Write-Through caches are TYPICALLY no-write-allocate
+Write-Back caches are TYPICALLY write-allocate
+
+
+================================================
+Miss Types                                     |
+================================================
+
+Cold Misses-
+    Location accessed for the 1st time
+    Can reduce by increasing block size (spatial locality)
+
+Conflict Misses-
+    More blocks that map into a single set is concurrently active than can be stored in the set
+    Can reduce by increase associativity
+
+Capacity Misses-
+    More blocks are active that can fit into cache
+    Working set
+
+    
+Pre-fetching is a technique that could be used to alleviate all three typres of misses
+    Predict what will be used next and pre-fetch before acutally have  miss
+        Large block size is a form of prefetching
+    If worong, can worsen performance of cache
+
+Example:
+------------------
+Fully Associative Cache: 1 Set (no indexing)
+    Cold Misses- yes
+    Conflict Misses- no (no indexing so no collisions)
+    Capacity Misses- yes
+
+

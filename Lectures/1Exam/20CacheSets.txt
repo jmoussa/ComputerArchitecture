@@ -8,11 +8,11 @@ Address: 0x420  01000   01      00000
                 Tag   Index  BlockOffset
 
 Elements of Address:
------------------------------------------------------------------
-Block Offset: Identify Block Element |  2^x=BlockSize           |
-Index: Identify CacheBlock           |  CacheSize/BlockSize     |
-Tag: Stored in Cache                 |  Remaining front bits    |
------------------------------------------------------------------
+-----------------------------------------------------------------------
+Block Offset: Identify Block Element |  2^x=BlockSize                 |
+Index: Identify CacheBlock           |  CacheSize/BlockSize | 2^x=Sets|
+Tag: Stored in Cache                 |  Remaining front bits          |
+-----------------------------------------------------------------------
 
 -Part of memory address applied to cache
     -Index
@@ -39,11 +39,11 @@ Reorganize Cache to Sets
 ==========================================
 Sets                                     |
 ==========================================
-Cache = Array of Sets = Array Of Blocks
+Cache = Array of Sets = Array Of Blocks = Array of Bytes
 ****Blocks are now separated by Tags****
-# of Sets = CacheSize/(BlockSize * Associativity)
 
-# of Blocks in Sets = Associativity
+# of Sets = CacheSize / (BlockSize * Associativity)
+# of Blocks in each Set = Associativity
 
 Rather than kicking out old addresses with conflict misses, put them in separate blocks in the same set
 
@@ -76,13 +76,3 @@ Replacement Policy: Used in case of collisions
 ------------------------------
     First in First Out
     Automative Policy
-
-
-
-
-
-
-
-
-
-
