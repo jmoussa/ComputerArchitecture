@@ -3,14 +3,11 @@
 #include "cache.h"
 #include <math.h>
 
-void printStatus();
-
 typedef struct{
     int tag;
     int min;
     int max;
     int valid;
-    int dirty;
 } Line;
 
 typedef struct{
@@ -18,9 +15,11 @@ typedef struct{
     int size;
 } Set;
 
+void printStatus();
+
 FILE* trace;
-int reads, writes, hits, misses;
-int readsB, writesB, hitsB, missesB;
+int aReads, aWrites, aHits, aMisses;
+int bReads,bWrites , bHits, bMisses;
 
 int simulate(Cache * cache, char* traceFile){
     char line[50];
@@ -79,30 +78,54 @@ int simulate(Cache * cache, char* traceFile){
             currentLine = currentSet->baseLine + i;
 
             if(currentLine->tag == tag){
-                hits++;
+                aHits++;
                 if(mode=='W'){
-                    writes++;
+                    aWrites++;
                 }else{
-                    reads++;
+                    aReads++;
                 }
             }else{
-                misses++;
+                aMisses++;
 
                 currentLine->tag = tag;
                 currentLine->min = blockOffset-blockOffset%blockSize;
                 currentLine->max = currentLine->min+blockSize;
                 currentLine->valid = 1;
                 if(mode=='W'){
-                    reads++;
-                    writes++;
+                    aReads++;
+                    aWrites++;
                 }
             }
         }
 
         //Type B
-        blockOffset = 
-        set = 
-        tag = 
+        blockOffset = address&blockSection; 
+        set = ((address&tagSection)>>blockBits)>>setBits;
+        tag = (address&setSection) >> blockBits;
+        currentSet = baseSet + set;
+        for(i=0;i<setSize;i++){
+            currentLine = currentSet->baseLine + i;
+
+            if(currentLine->tag == tag){
+                bHits++;
+                if(mode=='W'){
+                    bWrites++;
+                }else{
+                    bReads++;
+                }
+            }else{
+                bMisses++;
+
+                currentLine->tag = tag;
+                currentLine->min = blockOffset-blockOffset%blockSize;
+                currentLine->max = currentLine->min+blockSize;
+                currentLine->valid = 1;
+                if(mode=='W'){
+                    bReads++;
+                    bWrites++;
+                }
+            }
+        }
     }
 
     for(i=0;i<numSets;i++){
@@ -117,18 +140,16 @@ int simulate(Cache * cache, char* traceFile){
 
 void printStatus(){
     printf("Cache A\n");
-    printf("Memory reads : %d\n",reads);
-    printf("Memory writes : %d\n",writes);
-    printf("Cache hits : %d\n",hits);
-    printf("Cache misses : %d\n",misses);
+    printf("Memory reads : %d\n",aReads);
+    printf("Memory writes : %d\n",aWrites);
+    printf("Cache hits : %d\n",aHits);
+    printf("Cache misses : %d\n",aMisses);
     
     printf("Cache B\n");
-    printf("Memory reads : %d\n",readsB);
-    printf("Memory writes : %d\n",writesB);
-    printf("Cache hits : %d\n",hitsB);
-    printf("Cache misses : %d\n",missesB);
-
-    
+    printf("Memory reads : %d\n",bReads);
+    printf("Memory writes : %d\n",bWrites);
+    printf("Cache hits : %d\n",bHits);
+    printf("Cache misses : %d\n",bMisses);   
     return;
 }
 
