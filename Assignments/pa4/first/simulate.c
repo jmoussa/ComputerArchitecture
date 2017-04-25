@@ -3,7 +3,7 @@
 #include "cache.h"
 #include <math.h>
 
-void print();
+void printStatus();
 
 typedef struct{
     int tag;
@@ -20,6 +20,7 @@ typedef struct{
 
 FILE* trace;
 int reads, writes, hits, misses;
+int readsB, writesB, hitsB, missesB;
 
 int simulate(Cache * cache, char* traceFile){
     char line[50];
@@ -65,8 +66,70 @@ int simulate(Cache * cache, char* traceFile){
         currentSet->baseLine = (Line*)malloc(setSize*sizeof(Line));
     }
     currentSet = baseSet;
-    //100
 
+    while(fgets(line,50,trace)!=NULL){
+        sscanf(line, "%s %c %x",eip, &mode,&address);
+        //Type A
+        blockOffset = address&blockSection;
+        set = (address&setSection) >> blockBits;
+        tag = ((address&tagSection)>>blockBits)>>setBits;
+
+        currentSet = baseSet + set;
+        for(i=0;i<setSize;i++){
+            currentLine = currentSet->baseLine + i;
+
+            if(currentLine->tag == tag){
+                hits++;
+                if(mode=='W'){
+                    writes++;
+                }else{
+                    reads++;
+                }
+            }else{
+                misses++;
+
+                currentLine->tag = tag;
+                currentLine->min = blockOffset-blockOffset%blockSize;
+                currentLine->max = currentLine->min+blockSize;
+                currentLine->valid = 1;
+                if(mode=='W'){
+                    reads++;
+                    writes++;
+                }
+            }
+        }
+
+        //Type B
+        blockOffset = 
+        set = 
+        tag = 
+    }
+
+    for(i=0;i<numSets;i++){
+        currentSet = baseSet+i;
+        free(currentSet->baseLine);
+    }
+    free(baseSet);
+    fclose(trace);
+    printStatus();
+    return 0;
+}
+
+void printStatus(){
+    printf("Cache A\n");
+    printf("Memory reads : %d\n",reads);
+    printf("Memory writes : %d\n",writes);
+    printf("Cache hits : %d\n",hits);
+    printf("Cache misses : %d\n",misses);
+    
+    printf("Cache B\n");
+    printf("Memory reads : %d\n",readsB);
+    printf("Memory writes : %d\n",writesB);
+    printf("Cache hits : %d\n",hitsB);
+    printf("Cache misses : %d\n",missesB);
+
+    
+    return;
 }
 
 
