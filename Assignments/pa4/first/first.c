@@ -13,7 +13,7 @@ int main(int argc, char**argv){
                 printf("ERROR");
                 return -1;
             }
-            simulate(&currentSim,argv[4]);
+            simulate(&currentSim,argv[4],argv[2]);
             return 0;
         }
     }

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "cache.h"
 
 int validArgs(char* cache, char* associativity, char* block, Cache* currentSim){
@@ -46,7 +47,7 @@ int validCache(char* cache){
     return 0;
 }
 
-int validAss(char * ass){
+int validAss(char* ass){
     int setSize;
     if(strcmp(ass, "-direct")==0){
         setSize = 1;

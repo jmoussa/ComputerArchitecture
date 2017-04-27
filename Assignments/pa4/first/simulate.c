@@ -86,11 +86,12 @@ int simulate(Cache * cache, char* traceFile){
                 }
             }else{
                 aMisses++;
-                //direct mapped
+                
                 currentLine->tag = tag;
                 currentLine->min = blockOffset-blockOffset%blockSize;
                 currentLine->max = currentLine->min+blockSize;
                 currentLine->valid = 1;
+                
                 if(mode=='W'){
                     aReads++;
                     aWrites++;
@@ -102,7 +103,9 @@ int simulate(Cache * cache, char* traceFile){
         blockOffset = address&blockSection; 
         index = ((address&indexSection)>>blockBits)>>(address-blockBits-indexBits);
         tag = (address&tagSection) >> blockBits;
+        
         currentSet = baseSet + index;
+        
         for(i=0;i<setSize;i++){
             currentLine = currentSet->baseLine + i;
 
@@ -115,11 +118,12 @@ int simulate(Cache * cache, char* traceFile){
                 }
             }else{
                 bMisses++;
-                //direct mapped
+                
                 currentLine->tag = tag;
                 currentLine->min = blockOffset-blockOffset%blockSize;
                 currentLine->max = currentLine->min+blockSize;
                 currentLine->valid = 1;
+                
                 if(mode=='W'){
                     bReads++;
                     bWrites++;
