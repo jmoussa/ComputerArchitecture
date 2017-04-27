@@ -2,6 +2,7 @@
 #include <string.h>
 #include "cache.h"
 
+
 int validArgs(char* cache, char* associativity, char* block, Cache* currentSim){
     int cacheSize = 0;
     int setSize = 0;
@@ -18,19 +19,22 @@ int validArgs(char* cache, char* associativity, char* block, Cache* currentSim){
     if(!setSize){
         return 0;
     }
-    currentSim->setSize = setSize;
+    if(setSize == -1){
+        sets = 1;
+    }else{
+        sets = cacheSize/(setSize*blockSize);
+        if(sets==0){
+            return 0;
+        }
+        currentSim->sets = sets;
+        currentSim->setSize = setSize;
+    }
 
     blockSize = validBlock(block);
     if(!blockSize){
         return 0;
     }
     currentSim->blockSize = blockSize;
-
-    sets = cacheSize/(setSize*blockSize);
-    if(sets==0){
-        return 0;
-    }
-    currentSim->sets = sets;
 
     return 1;
 }
@@ -56,6 +60,9 @@ int validAss(char* ass){
         if(!isPow2(setSize)){
             setSize = 0;
         }
+    }else if(strcmp(ass,"-assoc")==0){
+        setSize = -1;
+        return setSize;
     }
     return setSize;
 }
