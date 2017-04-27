@@ -37,21 +37,21 @@ int simulate(Cache * cache, char* traceFile){
     int blockSize = cache->blockSize;
     
     int tag;
-    int set;
+    int index;
     int blockOffset;
 
-    int setBits;
+    int indexBits;
     int blockBits;
 
     int blockSection;
-    int setSection;
+    int indexSection;
     int tagSection;
 
     blockSection = blockSize - 1;
     blockBits = log2(blockSize);
-    setBits = log2(numSets);
-    setSection = (numSets - 1)<<blockBits;
-    tagSection = -1^setSection^blockSection;
+    indexBits = log2(numSets);
+    indexSection = (numSets - 1)<<blockBits;
+    tagSection = -1^indexSection^blockSection;
 
     trace = fopen(traceFile, "r");
     if(!trace){
@@ -70,10 +70,10 @@ int simulate(Cache * cache, char* traceFile){
         sscanf(line, "%s %c %x",eip, &mode,&address);
         //Type A
         blockOffset = address&blockSection;
-        set = (address&setSection) >> blockBits;
-        tag = ((address&tagSection)>>blockBits)>>setBits;
+        index = (address&indexSection) >> blockBits;
+        tag = ((address&tagSection)>>blockBits)>>indexBits;
 
-        currentSet = baseSet + set;
+        currentSet = baseSet + index;
         for(i=0;i<setSize;i++){
             currentLine = currentSet->baseLine + i;
 
@@ -86,7 +86,7 @@ int simulate(Cache * cache, char* traceFile){
                 }
             }else{
                 aMisses++;
-
+                //direct mapped
                 currentLine->tag = tag;
                 currentLine->min = blockOffset-blockOffset%blockSize;
                 currentLine->max = currentLine->min+blockSize;
@@ -100,9 +100,9 @@ int simulate(Cache * cache, char* traceFile){
 
         //Type B
         blockOffset = address&blockSection; 
-        set = ((address&tagSection)>>blockBits)>>setBits;
-        tag = (address&setSection) >> blockBits;
-        currentSet = baseSet + set;
+        index = ((address&indexSection)>>blockBits)>>(address-blockBits-indexBits);
+        tag = (address&tagSection) >> blockBits;
+        currentSet = baseSet + index;
         for(i=0;i<setSize;i++){
             currentLine = currentSet->baseLine + i;
 
@@ -115,7 +115,7 @@ int simulate(Cache * cache, char* traceFile){
                 }
             }else{
                 bMisses++;
-
+                //direct mapped
                 currentLine->tag = tag;
                 currentLine->min = blockOffset-blockOffset%blockSize;
                 currentLine->max = currentLine->min+blockSize;
@@ -152,5 +152,3 @@ void printStatus(){
     printf("Cache misses : %d\n",bMisses);   
     return;
 }
-
-

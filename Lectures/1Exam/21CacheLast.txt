@@ -1,6 +1,6 @@
 Lecture 21 4/7/16
 
-Direct-Mapped Cache: Associativity=1
+Direct Cache: Associativity=1
 Fully Associative Cache: Sets=1
 
 Associativity is set/fixed by processor
