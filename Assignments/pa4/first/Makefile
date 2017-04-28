@@ -1,3 +1,5 @@
+all: runSim.o validate.o first.c
+	gcc -Wall -Werror -fsanitize=address first.c runSim.o validate.o -o first
 first: runSim.o validate.o first.c
 	gcc -Wall -Werror -fsanitize=address first.c runSim.o validate.o -o first
 

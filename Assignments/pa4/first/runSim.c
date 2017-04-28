@@ -19,7 +19,10 @@ void printCache();
 
 FILE* trace;
 int aReads, aWrites, aHits, aMisses;
-int bReads,bWrites , bHits, bMisses;
+int bReads=0;
+int bWrites=0;
+int bHits=0;
+int bMisses=0;
 
 int simulate(Cache * cache, char* traceFile){
     char line[50];
@@ -67,7 +70,8 @@ int simulate(Cache * cache, char* traceFile){
     currentSet = baseSet;
 
     while(fgets(line,50,trace)!=NULL){
-        sscanf(line, "%s %c %x",eip, &mode,&address);
+        sscanf(line, "%s %c %x", eip, &mode,&address);
+        
         //Type A
         blockOffset = address&blockSection;
         index = (address&indexSection) >> blockBits;
