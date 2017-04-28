@@ -6,9 +6,7 @@
 int main(int argc, char**argv){
     Cache currentSim;
     if(argc == 5){
-        int valid;
-        validate = validate(argv[1],argv[2],argv[3],&currentSim);
-        if(validate){
+        if(validate(argv[1],argv[2],argv[3],&currentSim)!=0){
             if(currentSim.setSize > 1){
                 printf("ERROR");
                 return -1;

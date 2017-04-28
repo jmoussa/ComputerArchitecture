@@ -8,7 +8,7 @@ int validAss(char*);
 int validBlock(char*);
 int isPow2(int);
 
-int validate(char* cache, char* associativity, char* block, Cache* currentSim){
+int  validate(char* cache, char* associativity, char* block, Cache* currentSim){
     int cacheSize = 0;
     int setSize = 0;
     int blockSize = 0;
@@ -21,7 +21,7 @@ int validate(char* cache, char* associativity, char* block, Cache* currentSim){
     currentSim->cacheSize = cacheSize;
 
     setSize = validAss(associativity);
-    if(!setSize){
+    if(setSize==(-2)){
         return 0;
     }
     if(setSize == -1){
@@ -57,7 +57,7 @@ int validCache(char* cache){
 }
 
 int validAss(char* ass){
-    long setSize;
+    long setSize = (-2);
     if(strcmp(ass, "-direct")==0){
         setSize = 1;
     }else if(strncmp(ass, "-assoc:",7)==0){
