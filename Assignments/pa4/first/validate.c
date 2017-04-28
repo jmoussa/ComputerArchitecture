@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "cache.h"
 
@@ -56,11 +57,11 @@ int validCache(char* cache){
 }
 
 int validAss(char* ass){
-    int setSize;
+    long setSize;
     if(strcmp(ass, "-direct")==0){
         setSize = 1;
     }else if(strncmp(ass, "-assoc:",7)==0){
-        setSize = strtol(ass,ass+7,10);
+        setSize = strtol(ass,&ass+7,10);
         if(!isPow2(setSize)){
             setSize = 0;
         }
