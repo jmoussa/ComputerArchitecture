@@ -2,8 +2,12 @@
 #include <string.h>
 #include "cache.h"
 
+int validCache(char*);
+int validAss(char*);
+int validBlock(char*);
+int isPow2(int);
 
-int validArgs(char* cache, char* associativity, char* block, Cache* currentSim){
+int validate(char* cache, char* associativity, char* block, Cache* currentSim){
     int cacheSize = 0;
     int setSize = 0;
     int blockSize = 0;

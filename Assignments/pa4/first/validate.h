@@ -1,1 +1,1 @@
-int validArgs(char* , char* , char* , Cache* );
+int validate(char* , char* , char* , Cache* );

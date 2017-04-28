@@ -15,7 +15,7 @@ typedef struct{
     int size;
 } Set;
 
-void printStatus();
+void printCache();
 
 FILE* trace;
 int aReads, aWrites, aHits, aMisses;
@@ -138,11 +138,11 @@ int simulate(Cache * cache, char* traceFile){
     }
     free(baseSet);
     fclose(trace);
-    printStatus();
+    printCache();
     return 0;
 }
 
-void printStatus(){
+void printCache(){
     printf("Cache A\n");
     printf("Memory reads : %d\n",aReads);
     printf("Memory writes : %d\n",aWrites);
