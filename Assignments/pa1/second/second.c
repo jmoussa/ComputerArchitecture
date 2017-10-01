@@ -8,8 +8,8 @@ struct Node{
 	struct Node * next;
 };
 
-typedef struct Node Node;
 
+typedef struct Node Node;
 
 Node* insertNode(Node* front, int new_data){
 	Node* prev;
